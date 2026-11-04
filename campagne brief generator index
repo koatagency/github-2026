@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#172d27">
+  <title>Campaign Brief Builder | ECOMPROFITS</title>
+  <style>
+    :root { color-scheme: light; --ink: #172d27; --muted: #62716b; --green: #215c45; --line: #dce3de; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f5f7f3; color: var(--ink); font-family: Arial, Helvetica, sans-serif; line-height: 1.5; }
+    header { border-bottom: 1px solid var(--line); background: #fff; }
+    .brand { max-width: 1180px; margin: auto; padding: 22px 28px; font-size: 17px; font-weight: 800; letter-spacing: 1.8px; }
+    .brand span { color: var(--green); }
+    main { max-width: 1180px; margin: auto; padding: 48px 28px 24px; }
+    .eyebrow { margin: 0 0 12px; color: var(--green); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(30px, 4vw, 44px); line-height: 1.15; letter-spacing: -1.5px; }
+    .intro { color: var(--muted); margin: 16px 0 30px; max-width: 620px; }
+    .workspace { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; align-items: start; }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 5px 20px #172d2704; }
+    .card-heading { padding: 23px 26px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 12px; }
+    .step { display: grid; place-items: center; width: 30px; height: 30px; background: #edf3ed; border-radius: 9px; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    h2 { font-size: 17px; margin: 0; }
+    .subheading { font-size: 12px; color: var(--muted); margin: 2px 0 0; }
+    form { padding: 26px; }
+    .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 16px; }
+    .full { grid-column: 1 / -1; }
+    label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 7px; }
+    input, textarea, select { width: 100%; border: 1px solid #cfd9d2; border-radius: 7px; padding: 11px 12px; font: inherit; font-size: 14px; color: var(--ink); background: #fff; }
+    input::placeholder, textarea::placeholder { color: #89928d; opacity: 1; }
+    textarea { resize: vertical; min-height: 82px; }
+    input:focus, textarea:focus, select:focus { outline: 3px solid #d8e9da; border-color: var(--green); }
+    button { border: 0; border-radius: 7px; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; min-height: 46px; padding: 12px 18px; }
+    button:focus-visible { outline: 3px solid #8eb79a; outline-offset: 3px; }
+    .primary { margin-top: 25px; width: 100%; background: var(--green); color: white; display: flex; justify-content: center; gap: 12px; align-items: center; }
+    .primary:hover { background: #174632; }
+    .hint { font-size: 12px; color: var(--muted); margin: 12px 0 0; text-align: center; }
+    .preview { background: #fcfdfb; }
+    .preview-body { padding: 26px; }
+    .empty { min-height: 390px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px 10px; }
+    .document-icon { width: 52px; height: 62px; border: 2px solid #b9cbbd; border-radius: 7px; padding: 15px 10px; margin-bottom: 20px; }
+    .document-icon i { display: block; height: 2px; margin: 6px 0; background: #b9cbbd; }
+    .empty h3 { font-size: 16px; margin: 0 0 8px; }
+    .empty p { font-size: 14px; color: var(--muted); max-width: 260px; margin: 0; }
+    #brief-title { font-size: 25px; line-height: 1.25; margin: 0 0 7px; overflow-wrap: anywhere; }
+    .brief-brand { color: var(--muted); margin: 0 0 24px; font-size: 14px; overflow-wrap: anywhere; }
+    dl { margin: 0; }
+    .brief-item { border-top: 1px solid var(--line); padding: 16px 0; }
+    dt { color: var(--green); font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; margin-bottom: 5px; }
+    dd { margin: 0; font-size: 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .copy { width: 100%; border: 1px solid #cfd9d2; background: #fff; color: var(--ink); }
+    .copy:hover:not(:disabled) { background: #edf3ed; }
+    .copy:disabled { opacity: .45; cursor: not-allowed; }
+    #status { min-height: 20px; font-size: 12px; color: var(--green); margin: 10px 0 0; text-align: center; }
+    footer { padding: 25px 0 8px; font-size: 12px; color: var(--muted); text-align: center; }
+    [hidden] { display: none !important; }
+    @media (max-width: 760px) { main { padding: 32px 18px 20px; } .brand { padding: 20px 18px; } .workspace { grid-template-columns: 1fr; } .empty { min-height: 220px; } }
+    @media (max-width: 420px) { .fields { grid-template-columns: 1fr; } .card-heading, form, .preview-body { padding: 20px; } }
+    @media (prefers-reduced-motion: no-preference) { button { transition: background .15s ease; } }
+  </style>
+</head>
+<body>
+  <header><div class="brand">ECOM<span>PROFITS</span></div></header>
+  <main>
+    <p class="eyebrow">A clear plan. A stronger campaign.</p>
+    <h1>Campaign Brief Builder</h1>
+    <p class="intro">Turn your campaign idea into a clear, shareable brief. Fill in the details below, then generate your plan.</p>
+    <div class="workspace">
+      <section class="card" aria-labelledby="details-heading">
+        <div class="card-heading"><span class="step">01</span><div><h2 id="details-heading">Campaign details</h2><p class="subheading">Start with the essentials. All fields are optional.</p></div></div>
+        <form id="brief-form">
+          <div class="fields">
+            <div><label for="brand">Client or brand</label><input id="brand" name="brand" placeholder="e.g. Example Studio" maxlength="200"></div>
+            <div><label for="campaign">Campaign name</label><input id="campaign" name="campaign" placeholder="e.g. The Autumn Edit" maxlength="200"></div>
+            <div class="full"><label for="goal">Campaign goal</label><textarea id="goal" name="goal" placeholder="e.g. Introduce the new collection and increase online sales." maxlength="3000"></textarea></div>
+            <div class="full"><label for="audience">Target audience</label><textarea id="audience" name="audience" placeholder="e.g. Style-conscious shoppers aged 25–40 who value everyday essentials." maxlength="3000"></textarea></div>
+            <div class="full"><label for="offer">Offer</label><input id="offer" name="offer" placeholder="e.g. 20% off the new collection for one week" maxlength="1000"></div>
+            <div><label for="channel">Marketing channel</label><select id="channel" name="channel"><option value="">Select a channel</option>Instagram</option><option>Facebook</option><option>Google Ads</option><option>TikTok</option><option>Email</option><option>Organic search / SEO</option><option>Multiple channels</option><option>Other</option></select></div>
+            <div><label for="deadline">Deadline</label><input type="date" id="deadline" name="deadline"></div>
+            <div class="full"><label for="cta">Call to action</label><input id="cta" name="cta" placeholder="e.g. Shop the collection" maxlength="500"></div>
+          </div>
+          <button class="primary" type="submit">Generate brief <span aria-hidden="true">→</span></button>
+          <p class="hint">Placeholder examples are fictional. Add your own campaign details.</p>
+        </form>
+      </section>
+      <section class="card preview" aria-labelledby="preview-heading">
+        <div class="card-heading"><span class="step">02</span><div><h2 id="preview-heading">Your campaign brief</h2><p class="subheading">Ready to copy and share with your team.</p></div></div>
+        <div class="preview-body">
+          <div id="empty" class="empty"><div class="document-icon" aria-hidden="true"><i></i><i></i><i></i></div><h3>Your next campaign starts here.</h3><p>Add your details and select “Generate brief” to see everything come together.</p></div>
+          <article id="brief" hidden aria-label="Generated campaign brief" tabindex="-1"><p class="eyebrow">Campaign brief</p><h3 id="brief-title"></h3><p class="brief-brand" id="brief-brand"></p><dl id="brief-details"></dl></article>
+          <button class="copy" id="copy" type="button" disabled>Copy brief</button>
+          <p id="status" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+    </div>
+    <footer>ECOMPROFITS · Simple tools for focused marketing.<br>Your details stay in this page. Nothing is sent or saved.</footer>
+  </main>
+  <script>
+    // Keep the generated text separate so copying always matches the preview.
+    const form = document.getElementById('brief-form');
+    const copyButton = document.getElementById('copy');
+    const status = document.getElementById('status');
+    let briefText = '';
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const data = new FormData(form);
+      const value = name => String(data.get(name) || '').trim();
+      const campaign = value('campaign') || 'Untitled campaign';
+      const brand = value('brand') || 'Not specified';
+      // Parse date components locally to avoid timezone-related date shifts.
+      const dateParts = value('deadline').split('-').map(Number);
+      const deadline = value('deadline')
+        ? new Date(dateParts[0], dateParts[1] - 1, dateParts[2]).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+        : 'Not specified';
+      const details = [
+        ['Campaign goal', value('goal')],
+        ['Target audience', value('audience')],
+        ['Offer', value('offer')],
+        ['Marketing channel', value('channel')],
+        ['Call to action', value('cta')],
+        ['Deadline', deadline]
+      ];
+      document.getElementById('brief-title').textContent = campaign;
+      document.getElementById('brief-brand').textContent = 'Client / brand: ' + brand;
+      const list = document.getElementById('brief-details');
+      list.replaceChildren();
+      details.forEach(([label, text]) => {
+        const row = document.createElement('div');
+        row.className = 'brief-item';
+        const term = document.createElement('dt');
+        const description = document.createElement('dd');
+        term.textContent = label;
+        description.textContent = text || 'Not specified';
+        row.append(term, description);
+        list.append(row);
+      });
+      briefText = ['CAMPAIGN BRIEF', campaign, 'Client / brand: ' + brand, '',
+        ...details.map(([label, text]) => label + '\n' + (text || 'Not specified'))].join('\n\n');
+      document.getElementById('empty').hidden = true;
+      document.getElementById('brief').hidden = false;
+      copyButton.disabled = false;
+      status.textContent = 'Brief generated. Ready to copy.';
+      document.getElementById('brief').focus({ preventScroll: true });
+      if (window.matchMedia('(max-width: 760px)').matches) {
+        document.getElementById('preview-heading').scrollIntoView({ block: 'start' });
+      }
+    });
+
+    copyButton.addEventListener('click', async function () {
+      try {
+        if (!navigator.clipboard || !window.isSecureContext) throw new Error('Use fallback');
+        await navigator.clipboard.writeText(briefText);
+        status.textContent = 'Brief copied to clipboard!';
+      } catch (error) {
+        // Support browsers that restrict the Clipboard API for local files.
+        const temporary = document.createElement('textarea');
+        temporary.value = briefText;
+        temporary.setAttribute('aria-label', 'Campaign brief to copy');
+        temporary.style.cssText = 'position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;';
+        document.body.append(temporary);
+        temporary.select();
+        temporary.setSelectionRange(0, temporary.value.length);
+        let copied = false;
+        try { copied = document.execCommand('copy'); } catch (fallbackError) { /* Show manual instructions below. */ }
+        temporary.remove();
+        copyButton.focus({ preventScroll: true });
+        status.textContent = copied ? 'Brief copied to clipboard!' : 'Copy unavailable. Select the brief text and copy it manually.';
+      }
+    });
+  </script>
+</body>
+</html>
